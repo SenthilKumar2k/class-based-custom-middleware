@@ -23,3 +23,21 @@ import json
 # start of set request data
 # index call {'data': '2'}
 # end of set request
+
+class Setrequestdata:
+    def __init__(self, get_response):
+        print("set request data insiitalized")
+        self.get_response=get_response
+    def __call__(self, request):
+        print(f"request data={request.body}")
+        data=json.loads(request.body)
+        number=data.get('number')
+        request.custom_data={'data':number}
+        print("start set request data")
+        response=self.get_response(request)
+        print("end set request data")
+        return response
+    
+
+"""input"""
+#raw json  {"number":2}

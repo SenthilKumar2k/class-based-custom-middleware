@@ -3,6 +3,6 @@ from django.http import JsonResponse
 
 @csrf_exempt
 def index(request):
-    print("index call",request.POST)
+    print("index call",request.custom_data)
     return JsonResponse({'message':'set request data succesfully'})
 
