@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'middleapp',
+    'advclassapp',
     'rest_framework',
 ]
 
@@ -49,7 +50,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'middleapp.middleware.Setrequestdata',
+    #'middleapp.middleware.Setrequestdata',
+    'advclassapp.middleware.Checkrequestdata',
 ]
 
 ROOT_URLCONF = 'src.urls'

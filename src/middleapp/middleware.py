@@ -26,7 +26,7 @@ import json
 
 class Setrequestdata:
     def __init__(self, get_response):
-        print("set request data insiitalized")
+        print("set request data intitalized")
         self.get_response=get_response
     def __call__(self, request):
         print(f"request data={request.body}")
