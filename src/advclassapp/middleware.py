@@ -19,10 +19,17 @@ class Checkrequestdata:
         print("end check request data")
         return response
 
-    def process_view(request, view_fun, *args , **kwargs):
+    def process_view(self,request, view_func, *args , **kwargs):
         # This is called after Djagno figures which view to call
         # but this is called before the view is called.
         print("process view of check even")
+        if view_func.__name__=='checkindex':
+            print("process view of check view name")
+            number=request.custom_data.get('data')
+            print(number)
+            if number is not None and int(number) % 2==0:
+                request.operation='update'
+
         #return JsonResponse({"msg" : "Returned from the Django middleware CheckEvent's process_view"})
         #return HttpResponse("Returned from the Django middleware CheckEvent's process_view")
         return None
@@ -31,3 +38,19 @@ class Checkrequestdata:
         print("checkeven exception")
         msg=str(exception)
         return JsonResponse({"msg":msg},status=400)
+    
+
+"""input"""
+#raw json  {"number":2}
+
+
+"""output"""
+# request data=b'{\n"number":2\n}'
+# start check request data
+# process view of check even
+# process view of check view name
+# 2
+# custom request data {'data': 2}
+# checkeven exception
+# end check request data
+# Bad Request: /checkdata/
