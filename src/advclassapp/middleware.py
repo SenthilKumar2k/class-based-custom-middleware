@@ -1,5 +1,7 @@
 import json
+import inspect
 from django.http import JsonResponse, HttpResponse
+from .views import CheckIndexView
 
 class Checkrequestdata:
     def __init__(self, get_response):
@@ -23,7 +25,9 @@ class Checkrequestdata:
         # This is called after Djagno figures which view to call
         # but this is called before the view is called.
         print("process view of check even")
-        if view_func.__name__=='checkindex':
+        print(view_func.__class__.__name__)
+        #if view_func.__class__.__name__=='CheckIndexView':
+        if inspect.isclass(view_func) and issubclass(view_func, CheckIndexView)
             print("process view of check view name")
             number=request.custom_data.get('data')
             print(number)
