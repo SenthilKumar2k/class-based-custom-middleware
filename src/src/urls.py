@@ -17,10 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from middleapp import views
-from advclassapp.views import CheckIndexView
+from advclassapp import views as view
+# from advclassapp.views import CheckIndexView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('setdata/',views.index),
-    path("checkdata/",include("advclassapp.urls")),
+    path('checkdata/',view.checkindex),
+    # path("checkdata/",include("advclassapp.urls")),
 ]
