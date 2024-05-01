@@ -1,11 +1,12 @@
 import json
-import inspect
 from django.http import JsonResponse, HttpResponse
-from .views import CheckIndexView
+from advclassapp.views import CheckIndexView
 
 class Checkrequestdata:
+
     def __init__(self, get_response):
         self.get_response=get_response
+
     def __call__(self, request):
         print(f"request data={request.body}")
         try:
@@ -20,19 +21,38 @@ class Checkrequestdata:
         response=self.get_response(request)
         print("end check request data")
         return response
+    
+    # def process_view(self,request, view_func, *args , **kwargs):
+    #     # This is called after Djagno figures which view to call
+    #     # but this is called before the view is called.
+    #     print("process view of check even")
+    #     print(view_func.__name__)
+    #     if view_func.__name__== 'checkindex':
+    #         print("process view of check view name")
+    #         number=request.custom_data.get('data')
+    #         print(number)
+    #         if number is not None and int(number) % 2==0:
+    #             setattr(request, 'operation', 'update')
+
+    #     #return JsonResponse({"msg" : "Returned from the Django middleware CheckEvent's process_view"})
+    #     #return HttpResponse("Returned from the Django middleware CheckEvent's process_view")
+    #     return None
+
 
     def process_view(self,request, view_func, *args , **kwargs):
         # This is called after Djagno figures which view to call
         # but this is called before the view is called.
         print("process view of check even")
-        print(view_func.__class__.__name__)
-        if view_func.__name__=="checkindex":
+        #print(getattr(view_func, 'cls', None))
+        #print(view_func.cls)
+        #if isinstance(view_func.cls, type) and issubclass(view_func.cls, CheckIndexView):
+        view_class = getattr(view_func, 'cls', None)
+        if view_class == CheckIndexView:
             print("process view of check view name")
             number=request.custom_data.get('data')
             print(number)
             if number is not None and int(number) % 2==0:
                 request.operation='update'
-
         #return JsonResponse({"msg" : "Returned from the Django middleware CheckEvent's process_view"})
         #return HttpResponse("Returned from the Django middleware CheckEvent's process_view")
         return None
